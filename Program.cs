@@ -12,14 +12,14 @@ public class Program
 {
 	public static void Main()
 	{
-		String iParam0 = @"r34343";
+		String iParam0 = @"AIzaSyAkCiqss1CQ4kerILCJdZVoquU6bEfIlc8";
 		String imagePath = @"C:\Users\pc\Desktop\1.png";
 		String imageUrl = null;
 		decimal iParam3 = 30;
 		String oParam0 = "";
 		int oParam1 = 0;
 		LabelDetection(iParam0, imagePath, imageUrl, iParam3, ref oParam0, ref oParam1, provideImage: 1);
-		Console.WriteLine("oParam0");
+		Console.WriteLine(oParam0);
 	}
 
 	private static JObject GetImageContentForCloudVision(string filePath)
@@ -62,7 +62,7 @@ public class Program
 			request.AddHeader("Accept", "application/json");
 			request.Parameters.Clear();
 			request.AddParameter("application/json", text, ParameterType.RequestBody);
-			var response = client.Post(request);
+			responseJson = client.Post(request).Content;
 		}
 		catch (Exception ex)
 		{
