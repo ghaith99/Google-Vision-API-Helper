@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Awf8ZSDnD9LKIVMh8M06HOvF60eYUTSkTD7Ghhl5yl6lozRZFFcpOoYBOVeKA/3lxbMhr8wJTr2p31EAWZrbaw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pc\\Google Drive\\Code\\AI API Services\\Google\\Google.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pc\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\restsharp\\106.10.1\\restsharp.106.10.1.nupkg.sha512"
+  ],
+  "logs": []
+}
