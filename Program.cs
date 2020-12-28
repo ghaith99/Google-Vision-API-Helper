@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-
+using Newtonsoft.Json;
 
 namespace Google
 {
@@ -12,14 +12,18 @@ public class Program
 {
 	public static void Main()
 	{
-		String iParam0 = @"AIzaSyAkCiqss1CQ4kerILCJdZVoquU6bEfIlc8";
-		String imagePath = @"C:\Users\pc\Desktop\1.png";
+		String apiKey = @"[API Key]";
+		String imagePath = @"[IMAGE Path]";
 		String imageUrl = null;
-		decimal iParam3 = 30;
-		String oParam0 = "";
-		int oParam1 = 0;
-		LabelDetection(iParam0, imagePath, imageUrl, iParam3, ref oParam0, ref oParam1, provideImage: 1);
-		Console.WriteLine(oParam0);
+		decimal timeout = 30;
+		String responseObject = "";
+		int statusCode = 0;
+
+		LabelDetection(apiKey, imagePath, imageUrl, timeout, ref responseObject, ref statusCode, provideImage: 1);	
+	
+		LandmarkDetection(apiKey, imagePath, imageUrl, timeout, ref responseObject, ref statusCode, provideImage: 1);
+
+		Console.WriteLine(responseObject);      
 	}
 
 	private static JObject GetImageContentForCloudVision(string filePath)
@@ -55,7 +59,7 @@ public class Program
 		string url = "https://vision.googleapis.com/v1/images:annotate?key=" + v;
 		try
 		{
-			JObject image = (provideImage == 0) ? GetImageUriObjectForCloudVision(v3) : GetImageContentForCloudVision(v2);
+            JObject image = (provideImage == 0) ? GetImageUriObjectForCloudVision(v3) : GetImageContentForCloudVision(v2);
 			string text = GetJsonRequestForCloudVision(apiCallType, image).ToString();
 			var client = new RestClient(url);
 			var request = new RestRequest();
@@ -63,6 +67,20 @@ public class Program
 			request.Parameters.Clear();
 			request.AddParameter("application/json", text, ParameterType.RequestBody);
 			responseJson = client.Post(request).Content;
+			
+			client.ExecuteAsync(request, response =>
+            {
+                 var responseToLog = new
+                {
+                    statusCode = response.StatusCode,
+                    content = response.Content,
+                    headers = response.Headers,
+                    responseUri = response.ResponseUri,
+                    errorMessage = response.ErrorMessage,
+                };
+                 Console.WriteLine(string.Format("Response: {1}",JsonConvert.SerializeObject(responseToLog)));
+            }); 
+          
 		}
 		catch (Exception ex)
 		{
